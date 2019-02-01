@@ -6,11 +6,31 @@ mismatch = -3
 gap      = -2
 
 #sequences. seq2 should always be larger than seq1
+
+
+#Original DNA
 seq1 = 'TGTTACGG'
 seq2 = 'GGTTGACTA'
 
+#Human DNA
+#seq1 = 'CACCCACGC'
+#seq2 = 'CTGACAAAGCCT'
+
+#Mouse DNA
+#seq1 = 'CACCCACGC'
+#seq2 = 'CTGACAAAGCCC'
+
+#Tilapia DNA
+seq1 = 'CACCCACTC'
+seq2 = 'CACACAAAGCCT'
+
+#Pufferfish DNA
+#seq1 = 'CACCCACTC'
+#seq2 = 'GAGACAAAGCCT'
+
 #scoring matrix size
 rows = len(seq1) + 1
+
 cols = len(seq2) + 1
 
 def create_score_matrix(rows, cols):
@@ -85,6 +105,14 @@ def traceback(matrix, x,y):
         return x-1,y,'gap'
 
 
+def print_pos(list_trace):
+    for i in list_trace:
+        if (list_trace.index(i)+1) == len(list_trace):
+            print(' i = ',i[0],' j = ',i[1],'\n')
+            break
+        print('i = ',i[0],' j = ',i[1],'-> ', end = '')
+
+
 def align_string(trace_list, seq1, seq2):
     #Prints out resulting sequence
     sequence_1 = ''
@@ -106,7 +134,10 @@ if __name__ == '__main__':
     #my main
     score_matrix, start_pos = create_score_matrix(rows, cols)
     start_x, start_y = start_pos
-    #print_matrix(score_matrix)
+
+    print_matrix(score_matrix)
     list_trace = searching(score_matrix,start_x,start_y)
+    #print(list_trace)
+    print_pos(list_trace)
     align_string(list_trace, seq1,seq2)
 
